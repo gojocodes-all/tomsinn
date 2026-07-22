@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7eee4">
+  <meta name="description" content="A little promise for Tomisin, from Jomiloju.">
+  <title>Still Us — For Tomisin</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+  <div class="paper-noise" aria-hidden="true"></div>
+
+  <main>
+    <!-- Opening envelope -->
+    <section class="hero" id="top">
+      <p class="eyebrow">FOR TOMISIN · 23 JULY 2026</p>
+      <h1>Before the last<br><em>bell rings…</em></h1>
+      <p class="hero-copy">
+        There’s something I need you to know shaaaaaaa 😭🌚
+      </p>
+
+      <button class="envelope" id="openLetter" type="button" aria-label="Open your letter">
+        <span class="envelope-flap"></span>
+        <span class="envelope-paper">Open this, Tomisin</span>
+        <span class="envelope-seal">T</span>
+      </button>
+
+      <p class="tiny-note">made by Jomiloju, so better like it ooo😭</p>
+    </section>
+
+    <!-- The story appears after the envelope is opened -->
+    <div class="story" id="story" hidden>
+      <section class="section letter-section reveal">
+        <div class="section-number">01</div>
+        <article class="letter-card">
+          <p class="salutation">Dear Tomisin,</p>
+          <h2>Tomorrow feels strange😔.</h2>
+          <p>
+            Because for years, seeing you never needed a plan. You were simply there—
+            somewhere between lessons, laughter, and all the ordinary school days I
+            didn’t realize I would one day miss.
+          </p>
+          <p>
+            I think that’s the part that hurts: not losing our friendship, but losing
+            the everyday version of it—the one where I never had to wonder when I’d
+            see you next.
+          </p>
+          <p>
+            Everyone keeps calling it “the end of secondary school” like that is a
+            normal sentence and not the end of a whole little world.
+          </p>
+          <p class="handwritten">And you were one of the best parts of mine.</p>
+        </article>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <div class="section-number">02</div>
+          <div>
+            <p class="eyebrow">THE THINGS I’LL MISS</p>
+            <h2>The small things were never really small.</h2>
+          </div>
+        </div>
+
+        <div class="memory-grid">
+          <article class="memory-card tilt-left">
+            <span>01</span>
+            <p>Your stupid laugh like the way it goes from low pitch to high 😭😭</p>
+          </article>
+          <article class="memory-card tilt-right">
+            <span>02</span>
+            <p>The random conversations that made no sense aswr 😔</p>
+          </article>
+          <article class="memory-card tilt-right">
+            <span>03</span>
+            <p>Your liveliness brooo life of the class😔🌚.</p>
+          </article>
+          <article class="memory-card tilt-left">
+            <span>04</span>
+            <p>Having my best friend in thr same class bro.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <div class="section-number">03</div>
+          <div>
+            <p class="eyebrow">A FEW THINGS YOU SHOULD KNOW</p>
+            <h2>Tap each note. Keep every word.</h2>
+          </div>
+        </div>
+
+        <div class="notes-grid">
+          <button class="note" type="button">
+            <span class="note-front">You mattered.<small>tap to open</small></span>
+            <span class="note-back">More than I probably ever managed to explain.🌚</span>
+          </button>
+          <button class="note" type="button">
+            <span class="note-front">You made things lighter.<small>tap to open</small></span>
+            <span class="note-back">Even on the long, annoying days when school felt like too much.</span>
+          </button>
+          <button class="note" type="button">
+            <span class="note-front">You’re in the good part.<small>tap to open</small></span>
+            <span class="note-back">When I remember secondary school, your name will be in the best partssss.😛</span>
+          </button>
+          <button class="note" type="button">
+            <span class="note-front">You’re my best friend.<small>tap to open</small></span>
+            <span class="note-back">Not just because we shared the same place—but because you made that place better.</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section route-section reveal">
+        <div class="section-number">04</div>
+        <p class="eyebrow">THE ROUTE CHANGES. WE DON’T HAVE TO.</p>
+        <h2>From “Hi”<br>to “you won’t believe what happened…”</h2>
+
+        <div class="route" aria-label="Our friendship timeline">
+          <div class="route-stop">
+            <span class="route-dot"></span>
+            <small>THEN</small>
+            <strong>“See you tomorrow.”</strong>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-stop">
+            <span class="route-dot"></span>
+            <small>NOW</small>
+            <strong>“How are we celebrating your bday🌚”</strong>
+          </div>
+          <div class="route-line"></div>
+          <div class="route-stop">
+            <span class="route-dot"></span>
+            <small>NEXT</small>
+            <strong>“You won’t believe what happened…”</strong>
+          </div>
+        </div>
+
+        <p class="route-message">
+          Different schools can change the route.<br>
+          <em>They do not get to erase the friendship.</em>
+        </p>
+      </section>
+
+      <section class="section question-section reveal" id="question">
+        <div class="question-card">
+          <p class="eyebrow">ONE IMPORTANT QUESTION</p>
+          <h2>When we part ways tmao </h2>
+          <p class="big-question">will we still be best friends?😔</p>
+
+          <div class="button-stage" id="buttonStage">
+            <button class="answer yes-button" id="yesButton" type="button">Obviously, yes</button>
+            <button class="answer no-button" id="noButton" type="button">No 😭</button>
+          </div>
+          <p class="button-comment" id="buttonComment" aria-live="polite">Choose carefully. One button go run away from u ooo😔.</p>
+        </div>
+      </section>
+
+      <section class="section final-section" id="finalSection" hidden>
+        <div class="final-card">
+          <div class="heart-stamp" aria-hidden="true">♥</div>
+          <p class="eyebrow">PROMISE ACCEPTED</p>
+          <h2>Thank you for choosing us.</h2>
+          <p>
+            I can’t promise life won’t get busy or that we’ll talk every single day.
+            But I can promise I won’t let one quiet week turn us into strangers.
+          </p>
+          <p>
+            I’ll still send the random message. I’ll still check in. I’ll still want
+            to hear every unnecessarily detailed story.
+          </p>
+          <p>
+            Tomorrow may be the last normal school day we share. It does not have to
+            be the last chapter of us.
+          </p>
+          <p>
+            You were one of the best parts of my secondary-school life, Tomisin. I
+            hope years from now, when school feels far away, we can look back and say:
+            <strong>we actually kept the promise.</strong>
+          </p>
+          <p class="handwritten final-line">I’m going to miss you more than these words can hold.</p>
+          <p class="signature">Your best friend,<br><strong>Jomiloju</strong></p>
+
+          <div class="promise-ticket" id="promiseTicket">
+            <div>
+              <small>FRIENDSHIP PROMISE</small>
+              <strong>Tomisin × Jomiloju</strong>
+            </div>
+            <div>
+              <small>DATE</small>
+              <strong>23.07.2026</strong>
+            </div>
+            <div>
+              <small>STATUS</small>
+              <strong>Not a goodbye, Never a goodbye.✨🥹</strong>
+            </div>
+          </div>
+
+          <button class="save-button" id="savePromise" type="button">Save our promise ↓</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
