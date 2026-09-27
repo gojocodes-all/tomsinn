@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "scripts": {
+    "check": "node --check promise-storage.js && node --check script.js",
+    "test": "node --test"
+  }
+}
