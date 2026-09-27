@@ -97,7 +97,7 @@ noButton.addEventListener("click", moveNoButton);
 // ---------- Accept the promise ----------
 yesButton.addEventListener("click", () => {
   finalSection.hidden = false;
-  localStorage.setItem("tomisinFriendshipPromise", "accepted");
+  promiseStorage.accept();
 
   if (!reduceMotion) launchConfetti();
 
@@ -107,7 +107,7 @@ yesButton.addEventListener("click", () => {
 });
 
 // Keep the ending visible if the page is refreshed after choosing Yes.
-if (localStorage.getItem("tomisinFriendshipPromise") === "accepted") {
+if (promiseStorage.isAccepted()) {
   finalSection.hidden = false;
 }
 
