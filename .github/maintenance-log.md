@@ -1,5 +1,24 @@
 # Maintenance log
 
+## 2026-10-11 — Restore the complete accepted-promise view
+
+- **Rationale:** On a return visit, stored acceptance unhid the final promise
+  section but left its parent story container hidden. The remembered ending was
+  therefore still invisible despite successful persistence.
+- **Files changed:** `script.js` centralizes the letter reveal path and uses it
+  for both first-time opening and restored visits;
+  `test/restored-promise.test.js` covers the complete restored DOM state;
+  `package.json` syntax-checks both tests; `README.md` documents the coverage;
+  `.github/maintenance-log.md` records the work.
+- **Validation:** `npm run check`, `npm test`, `git diff --check`, and a complete
+  diff review covering behavior, accessibility, privacy, reduced motion,
+  backward compatibility, and the dependency-free architecture.
+- **Risk:** Low. First-time opening, storage format, personal content, image
+  export, and deployment remain unchanged. Only visitors with an already
+  accepted promise now see the state that was intended to be restored.
+- **Rollback:** Revert the pull request's squash commit to restore the previous
+  partial restoration behavior and remove its regression test.
+
 ## 2026-10-04 — Document the project and contribution workflow
 
 - **Rationale:** The repository contained a complete interactive site and validation scripts but no README explaining its purpose, local usage, browser-only persistence, image export, structure, deployment contract, or contribution checks.
