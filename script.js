@@ -13,6 +13,19 @@ const confettiCanvas = document.querySelector("#confettiCanvas");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------- Open the envelope ----------
+function revealStory({ scrollToStart = false } = {}) {
+  openLetterButton.classList.add("opening");
+  openLetterButton.setAttribute("aria-label", "Letter opened");
+  story.hidden = false;
+  watchSections();
+
+  if (scrollToStart) {
+    story.querySelector(".section").scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth"
+    });
+  }
+}
+
 openLetterButton.addEventListener("click", () => {
   if (openLetterButton.classList.contains("opening")) return;
 
@@ -20,11 +33,7 @@ openLetterButton.addEventListener("click", () => {
   openLetterButton.setAttribute("aria-label", "Letter opened");
 
   window.setTimeout(() => {
-    story.hidden = false;
-    watchSections();
-    story.querySelector(".section").scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth"
-    });
+    revealStory({ scrollToStart: true });
   }, reduceMotion ? 10 : 900);
 });
 
@@ -108,6 +117,7 @@ yesButton.addEventListener("click", () => {
 
 // Keep the ending visible if the page is refreshed after choosing Yes.
 if (promiseStorage.isAccepted()) {
+  revealStory();
   finalSection.hidden = false;
 }
 
