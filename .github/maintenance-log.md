@@ -1,5 +1,27 @@
 # Maintenance log
 
+## 2026-10-19 — Keep note-card state accessible
+
+- **Rationale:** The flippable note buttons did not expose an initial pressed
+  state, and both their visible and hidden faces remained available to assistive
+  technology. This made the control's state and current content ambiguous until
+  the first activation.
+- **Files changed:** `index.html` defines the initial pressed state and hides
+  each back face semantically; `script.js` keeps the visible face,
+  `aria-hidden`, and `aria-pressed` synchronized; the new
+  `test/note-accessibility.test.js` covers initialization and repeated toggles;
+  `package.json` and `README.md` include the new validation coverage; this
+  log records the maintenance decision.
+- **Validation:** `npm run check`, `npm test` (6 passing tests), and a complete
+  diff review covering keyboard behavior, assistive-technology state, reduced
+  motion, mobile layout, privacy, backward compatibility, and the
+  dependency-free architecture.
+- **Risk:** Low. Visual styling, personal content, storage, downloads, and
+  deployment remain unchanged. The change only makes the already-visible
+  note-card state match its programmatic state.
+- **Rollback:** Revert the pull request's squash commit to restore the previous
+  note markup and click handler and remove the regression test.
+
 ## 2026-10-11 — Restore the complete accepted-promise view
 
 - **Rationale:** On a return visit, stored acceptance unhid the final promise
