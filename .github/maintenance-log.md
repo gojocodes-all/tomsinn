@@ -12,7 +12,7 @@
   `test/note-accessibility.test.js` covers initialization and repeated toggles;
   `package.json` and `README.md` include the new validation coverage; this
   log records the maintenance decision.
-- **Validation:** `npm run check`, `npm test` (5 passing tests), and a complete
+- **Validation:** `npm run check`, `npm test` (6 passing tests), and a complete
   diff review covering keyboard behavior, assistive-technology state, reduced
   motion, mobile layout, privacy, backward compatibility, and the
   dependency-free architecture.
