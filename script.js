@@ -59,10 +59,20 @@ function watchSections() {
 }
 
 // ---------- Flip the little notes ----------
+function setNoteOpen(note, isOpen) {
+  const front = note.querySelector(".note-front");
+  const back = note.querySelector(".note-back");
+
+  note.classList.toggle("open", isOpen);
+  note.setAttribute("aria-pressed", String(isOpen));
+  front.setAttribute("aria-hidden", String(isOpen));
+  back.setAttribute("aria-hidden", String(!isOpen));
+}
+
 document.querySelectorAll(".note").forEach((note) => {
+  setNoteOpen(note, false);
   note.addEventListener("click", () => {
-    note.classList.toggle("open");
-    note.setAttribute("aria-pressed", String(note.classList.contains("open")));
+    setNoteOpen(note, !note.classList.contains("open"));
   });
 });
 
