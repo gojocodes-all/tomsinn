@@ -8,6 +8,21 @@ const source = fs.readFileSync(
   path.join(__dirname, "..", "script.js"),
   "utf8"
 );
+const html = fs.readFileSync(
+  path.join(__dirname, "..", "index.html"),
+  "utf8"
+);
+
+test("note cards define an accessible initial state in the document", () => {
+  assert.equal(
+    (html.match(/class="note" type="button" aria-pressed="false"/g) ?? []).length,
+    4
+  );
+  assert.equal(
+    (html.match(/class="note-back" aria-hidden="true"/g) ?? []).length,
+    4
+  );
+});
 
 class FakeClassList {
   constructor() {
