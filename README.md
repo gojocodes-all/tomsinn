@@ -58,9 +58,10 @@ npm run check
 ```
 
 The automated tests cover successful persistence, failures while accessing or
-operating on browser storage, and restoration of the visible story and ending
-after an accepted promise is revisited. They do not replace manual browser
-checks for layout, animation, downloads, or the complete interaction flow.
+operating on browser storage, restoration of the visible story and ending after
+an accepted promise is revisited, and note-card pressed and visible-face states.
+They do not replace manual browser checks for layout, animation, downloads, or
+the complete interaction flow.
 
 ## Project structure
 
@@ -72,6 +73,7 @@ checks for layout, animation, downloads, or the complete interaction flow.
 | `promise-storage.js` | Failure-safe wrapper around the acceptance state in `localStorage` |
 | `test/promise-storage.test.js` | Node.js tests for the storage wrapper |
 | `test/restored-promise.test.js` | DOM regression test for restoring an accepted promise |
+| `test/note-accessibility.test.js` | DOM regression test for note-card accessibility state |
 | `.github/maintenance-log.md` | Dated maintenance decisions, validation, risk, and rollback notes |
 
 ## Privacy and data
