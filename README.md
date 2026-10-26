@@ -10,7 +10,7 @@ The project is a dependency-free static site. It uses plain HTML, CSS, and JavaS
 - Scroll-triggered sections and a reading-progress indicator
 - Flippable note cards with accessible pressed states
 - A playful “No” button that moves within its question area
-- Promise acceptance with optional confetti
+- One-time promise acceptance with optional confetti and locked answer states
 - Browser-local acceptance state that survives refreshes when storage is available
 - A generated 1200 × 675 PNG keepsake downloaded entirely in the browser
 - Responsive layouts and reduced-motion behavior
@@ -59,7 +59,8 @@ npm run check
 
 The automated tests cover successful persistence, failures while accessing or
 operating on browser storage, restoration of the visible story and ending after
-an accepted promise is revisited, and note-card pressed and visible-face states.
+an accepted promise is revisited, one-time acceptance behavior, and note-card
+pressed and visible-face states.
 They do not replace manual browser checks for layout, animation, downloads, or
 the complete interaction flow.
 
@@ -73,6 +74,7 @@ the complete interaction flow.
 | `promise-storage.js` | Failure-safe wrapper around the acceptance state in `localStorage` |
 | `test/promise-storage.test.js` | Node.js tests for the storage wrapper |
 | `test/restored-promise.test.js` | DOM regression test for restoring an accepted promise |
+| `test/promise-acceptance.test.js` | DOM regression test for one-time acceptance and locked answer states |
 | `test/note-accessibility.test.js` | DOM regression test for note-card accessibility state |
 | `.github/maintenance-log.md` | Dated maintenance decisions, validation, risk, and rollback notes |
 

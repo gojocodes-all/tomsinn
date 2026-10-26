@@ -114,21 +114,45 @@ noButton.addEventListener("focus", () => {
 noButton.addEventListener("click", moveNoButton);
 
 // ---------- Accept the promise ----------
-yesButton.addEventListener("click", () => {
+function revealAcceptedPromise({
+  persist = false,
+  celebrate = false,
+  scrollToEnd = false
+} = {}) {
+  const wasAlreadyVisible = !finalSection.hidden;
+
   finalSection.hidden = false;
-  promiseStorage.accept();
+  yesButton.disabled = true;
+  noButton.disabled = true;
+  yesButton.textContent = "Promise accepted ✓";
+  buttonComment.textContent = "Promise accepted. The answer is locked in.";
 
-  if (!reduceMotion) launchConfetti();
+  if (wasAlreadyVisible) return;
 
-  window.setTimeout(() => {
-    finalSection.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-  }, 180);
+  if (persist) promiseStorage.accept();
+  if (celebrate && !reduceMotion) launchConfetti();
+
+  if (scrollToEnd) {
+    window.setTimeout(() => {
+      finalSection.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth"
+      });
+    }, reduceMotion ? 0 : 180);
+  }
+}
+
+yesButton.addEventListener("click", () => {
+  revealAcceptedPromise({
+    persist: true,
+    celebrate: true,
+    scrollToEnd: true
+  });
 });
 
 // Keep the ending visible if the page is refreshed after choosing Yes.
 if (promiseStorage.isAccepted()) {
   revealStory();
-  finalSection.hidden = false;
+  revealAcceptedPromise();
 }
 
 // ---------- Draw a small confetti burst (no library needed) ----------

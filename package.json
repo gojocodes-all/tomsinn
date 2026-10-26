@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "check": "node --check promise-storage.js && node --check script.js && node --check test/promise-storage.test.js && node --check test/restored-promise.test.js && node --check test/note-accessibility.test.js",
+    "check": "node --check promise-storage.js && node --check script.js && node --check test/promise-storage.test.js && node --check test/restored-promise.test.js && node --check test/note-accessibility.test.js && node --check test/promise-acceptance.test.js",
     "test": "node --test"
   }
 }

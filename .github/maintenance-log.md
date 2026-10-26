@@ -1,5 +1,26 @@
 # Maintenance log
 
+## 2026-10-26 — Make promise acceptance a stable one-time state
+
+- **Rationale:** The answer controls remained active after accepting the promise,
+  so repeated activation could write the same state again, schedule duplicate
+  scrolling, and start overlapping confetti animation loops.
+- **Files changed:** `script.js` centralizes the accepted state, locks both
+  answer buttons, publishes clear live feedback, and prevents repeated side
+  effects; `styles.css` preserves the intended accepted-button appearance and
+  suppresses disabled hover behavior; `test/promise-acceptance.test.js` covers
+  repeated activation; the restored-state test, validation script, README, and
+  this maintenance log are updated.
+- **Validation:** `npm run check`, `npm test`, and a complete diff review
+  covering pointer and keyboard behavior, reduced motion, restored visits,
+  mobile layout, privacy, backward compatibility, and the dependency-free
+  architecture.
+- **Risk:** Low. The first acceptance still persists the promise, reveals and
+  scrolls to the ending, and launches confetti when motion is allowed. Only
+  repeated answer activation is prevented.
+- **Rollback:** Revert the pull request's squash commit to restore reusable
+  answer controls and remove the new regression coverage.
+
 ## 2026-10-19 — Keep note-card state accessible
 
 - **Rationale:** The flippable note buttons did not expose an initial pressed
