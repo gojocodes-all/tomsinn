@@ -583,8 +583,21 @@ h2 {
   background: var(--paper-light);
 }
 
-.yes-button:hover {
+.yes-button:not(:disabled):hover {
   transform: translateY(-3px) scale(1.03);
+}
+
+.answer:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.yes-button:disabled {
+  opacity: 1;
+}
+
+.no-button:disabled {
+  opacity: 0.55;
 }
 
 .no-button {

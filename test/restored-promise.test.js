@@ -61,14 +61,17 @@ test("a remembered promise reveals the story and its restored ending", () => {
   const story = new FakeElement({ hidden: true });
   const finalSection = new FakeElement({ hidden: true });
   const revealSections = [new FakeElement(), new FakeElement()];
+  const yesButton = new FakeElement();
+  const noButton = new FakeElement();
+  const buttonComment = new FakeElement();
   const selectors = new Map([
     ["#openLetter", openLetterButton],
     ["#story", story],
     ["#progressBar", new FakeElement()],
-    ["#noButton", new FakeElement()],
-    ["#yesButton", new FakeElement()],
+    ["#noButton", noButton],
+    ["#yesButton", yesButton],
     ["#buttonStage", new FakeElement()],
-    ["#buttonComment", new FakeElement()],
+    ["#buttonComment", buttonComment],
     ["#finalSection", finalSection],
     ["#savePromise", new FakeElement()],
     ["#confettiCanvas", new FakeElement()]
@@ -103,6 +106,13 @@ test("a remembered promise reveals the story and its restored ending", () => {
 
   assert.equal(story.hidden, false);
   assert.equal(finalSection.hidden, false);
+  assert.equal(yesButton.disabled, true);
+  assert.equal(noButton.disabled, true);
+  assert.equal(yesButton.textContent, "Promise accepted ✓");
+  assert.equal(
+    buttonComment.textContent,
+    "Promise accepted. The answer is locked in."
+  );
   assert.equal(openLetterButton.classList.contains("opening"), true);
   assert.equal(openLetterButton.attributes.get("aria-label"), "Letter opened");
   assert.equal(
