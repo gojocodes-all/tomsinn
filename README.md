@@ -18,7 +18,7 @@ The project is a dependency-free static site. It uses plain HTML, CSS, and JavaS
 ## Requirements
 
 - A modern browser for the site
-- Node.js 18 or later only for the repository validation commands
+- Node.js 22 for the repository validation commands (pinned in `.nvmrc` and CI)
 
 There are no npm dependencies to install.
 
@@ -45,17 +45,16 @@ If browser storage is blocked or unavailable, accepting the promise still works 
 
 ## Validation
 
-Run the dependency-free storage tests:
+With Node.js 22 active (run `nvm use` first if you use nvm), run the same
+complete validation gate used by CI:
 
 ```bash
-npm test
+npm run validate
 ```
 
-Check both JavaScript files for syntax errors:
-
-```bash
-npm run check
-```
+`npm run check` syntax-checks the production and test JavaScript files, while
+`npm test` runs the dependency-free Node.js test suite. `npm run validate`
+runs both phases in that order.
 
 The automated tests cover successful persistence, failures while accessing or
 operating on browser storage, restoration of the visible story and ending after
@@ -72,6 +71,8 @@ the complete interaction flow.
 | `styles.css` | Responsive layout, envelope and card effects, and reduced-motion rules |
 | `script.js` | Letter interactions, scrolling, confetti, and keepsake generation |
 | `promise-storage.js` | Failure-safe wrapper around the acceptance state in `localStorage` |
+| `.nvmrc` | Node.js version shared by contributors and CI |
+| `.github/workflows/validation.yml` | Read-only pull-request and `main` validation |
 | `test/promise-storage.test.js` | Node.js tests for the storage wrapper |
 | `test/restored-promise.test.js` | DOM regression test for restoring an accepted promise |
 | `test/promise-acceptance.test.js` | DOM regression test for one-time acceptance and locked answer states |
@@ -99,7 +100,7 @@ After deployment, manually verify:
 
 Keep changes consistent with the existing personal letter and paper-inspired visual direction. Before opening a pull request:
 
-1. Run `npm test` and `npm run check`.
+1. Run `npm run validate`.
 2. Test the complete interaction flow in a browser at desktop and mobile widths.
 3. Check keyboard focus indicators and reduced-motion behavior.
 4. Confirm that no personal content is sent to a server or third-party service.
