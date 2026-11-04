@@ -1,5 +1,27 @@
 # Maintenance log
 
+## 2026-11-04 — Add a reproducible validation gate
+
+- **Rationale:** The repository had deterministic syntax checks and seven
+  dependency-free tests, but no hosted workflow enforced them on pull requests
+  or changes to `main`. Contributors also had to remember two separate
+  commands, and the documented Node.js requirement was broader than any
+  verified runtime.
+- **Files changed:** `.nvmrc` pins Node.js 22; `package.json` adds a shared
+  `npm run validate` entry point; the new least-privilege workflow uses
+  immutable action commits, disables persisted checkout credentials, cancels
+  superseded runs, and enforces a timeout; `README.md` documents the aligned
+  local and hosted workflow; this log records the maintenance decision.
+- **Validation:** `npm run validate`, `git diff --check`, workflow structure
+  and action pins checked against the official action repositories, and a
+  complete diff review covering permissions, secrets, static-site behavior,
+  accessibility, privacy, and backward compatibility.
+- **Risk:** Low. The site HTML, CSS, JavaScript behavior, personal content,
+  browser storage, keepsake generation, dependencies, and deployment contract
+  are unchanged. The new workflow has read-only repository access.
+- **Rollback:** Revert this pull request to remove the hosted gate and local
+  runtime pin, then restore the two-command contribution guidance.
+
 ## 2026-10-26 — Make promise acceptance a stable one-time state
 
 - **Rationale:** The answer controls remained active after accepting the promise,
