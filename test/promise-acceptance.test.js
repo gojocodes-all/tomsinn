@@ -73,12 +73,14 @@ class FakeElement {
   }
 }
 
-test("promise acceptance locks both answers and celebrates only once", () => {
+function runPromiseFlow({ canvasContextAvailable = true } = {}) {
   const yesButton = new FakeElement();
   const noButton = new FakeElement();
   const buttonComment = new FakeElement();
   const finalSection = new FakeElement({ hidden: true });
   const confettiCanvas = new FakeElement();
+  if (!canvasContextAvailable) confettiCanvas.getContext = () => null;
+  const savePromiseButton = new FakeElement();
   const selectors = new Map([
     ["#openLetter", new FakeElement()],
     ["#story", new FakeElement({ hidden: true })],
@@ -88,7 +90,7 @@ test("promise acceptance locks both answers and celebrates only once", () => {
     ["#buttonStage", new FakeElement()],
     ["#buttonComment", buttonComment],
     ["#finalSection", finalSection],
-    ["#savePromise", new FakeElement()],
+    ["#savePromise", savePromiseButton],
     ["#confettiCanvas", confettiCanvas]
   ]);
 
@@ -96,7 +98,9 @@ test("promise acceptance locks both answers and celebrates only once", () => {
   let animationFrames = 0;
   const document = {
     createElement() {
-      return new FakeElement();
+      const element = new FakeElement();
+      if (!canvasContextAvailable) element.getContext = () => null;
+      return element;
     },
     documentElement: { scrollHeight: 0 },
     querySelector(selector) {
@@ -137,6 +141,27 @@ test("promise acceptance locks both answers and celebrates only once", () => {
     window
   });
 
+  return {
+    acceptCalls: () => acceptCalls,
+    animationFrames: () => animationFrames,
+    buttonComment,
+    finalSection,
+    noButton,
+    savePromiseButton,
+    yesButton
+  };
+}
+
+test("promise acceptance locks both answers and celebrates only once", () => {
+  const {
+    acceptCalls,
+    animationFrames,
+    buttonComment,
+    finalSection,
+    noButton,
+    yesButton
+  } = runPromiseFlow();
+
   const accept = yesButton.listeners.get("click");
   accept();
   accept();
@@ -149,6 +174,29 @@ test("promise acceptance locks both answers and celebrates only once", () => {
     buttonComment.textContent,
     "Promise accepted. The answer is locked in."
   );
-  assert.equal(acceptCalls, 1);
-  assert.equal(animationFrames, 1);
+  assert.equal(acceptCalls(), 1);
+  assert.equal(animationFrames(), 1);
+});
+
+test("promise acceptance continues when canvas rendering is unavailable", () => {
+  const {
+    acceptCalls,
+    animationFrames,
+    finalSection,
+    noButton,
+    savePromiseButton,
+    yesButton
+  } = runPromiseFlow({ canvasContextAvailable: false });
+
+  assert.doesNotThrow(() => yesButton.listeners.get("click")());
+  assert.equal(finalSection.hidden, false);
+  assert.equal(yesButton.disabled, true);
+  assert.equal(noButton.disabled, true);
+  assert.equal(acceptCalls(), 1);
+  assert.equal(animationFrames(), 0);
+  assert.doesNotThrow(() => savePromiseButton.listeners.get("click")());
+  assert.equal(
+    savePromiseButton.textContent,
+    "Save unavailable — take a screenshot"
+  );
 });

@@ -1,5 +1,24 @@
 # Maintenance log
 
+## 2026-11-09 — Keep promise acceptance usable without canvas rendering
+
+- **Rationale:** The promise flow assumed that every canvas returns a 2D
+  rendering context. When a browser cannot provide one, starting confetti could
+  interrupt acceptance and the keepsake control threw instead of reporting that
+  image export was unavailable. Both optional canvas paths now stop safely;
+  acceptance remains complete, and the save control gives a screenshot fallback.
+- **Files changed:** `script.js` adds defensive 2D-context checks;
+  `test/promise-acceptance.test.js` reuses its interaction harness and covers
+  acceptance when canvas rendering is unavailable; this log records the change.
+- **Validation:** `npm run validate`, `git diff --check`, and a complete diff
+  review covering normal acceptance, one-time persistence, reduced motion,
+  accessibility feedback, browser compatibility, privacy, and static hosting.
+- **Risk:** Low. Browsers with canvas support keep the existing confetti and PNG
+  behavior. Only the prior exception path changes, without adding dependencies,
+  storage, network requests, or personal-data handling.
+- **Rollback:** Revert this pull request to restore the unguarded canvas calls;
+  no stored state, generated file, schema, or deployment needs migration.
+
 ## 2026-11-04 — Add a reproducible validation gate
 
 - **Rationale:** The repository had deterministic syntax checks and seven

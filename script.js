@@ -158,6 +158,8 @@ if (promiseStorage.isAccepted()) {
 // ---------- Draw a small confetti burst (no library needed) ----------
 function launchConfetti() {
   const context = confettiCanvas.getContext("2d");
+  if (!context) return;
+
   const colours = ["#7b263b", "#d68b95", "#b7894d", "#f3d5bd", "#54182a"];
   const pieces = Array.from({ length: 110 }, () => ({
     x: Math.random() * window.innerWidth,
@@ -207,9 +209,14 @@ function launchConfetti() {
 // ---------- Save the promise as a simple image ----------
 savePromiseButton.addEventListener("click", () => {
   const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
   canvas.width = 1200;
   canvas.height = 675;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    savePromiseButton.textContent = "Save unavailable — take a screenshot";
+    return;
+  }
 
   context.fillStyle = "#f7eee4";
   context.fillRect(0, 0, canvas.width, canvas.height);
