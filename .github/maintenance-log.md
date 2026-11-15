@@ -1,5 +1,27 @@
 # Maintenance log
 
+## 2026-11-15 — Clamp reading progress during mobile overscroll
+
+- **Rationale:** The reading-progress calculation capped its upper bound but not
+  its lower bound. Browsers that expose a negative `scrollY` during top-edge
+  overscroll could therefore assign an invalid negative CSS width and leave the
+  indicator at a stale value instead of resetting it to zero. The visual value
+  is now clamped to the same 0–100% range represented by the progress bar.
+- **Files changed:** `script.js` clamps both progress bounds;
+  `test/scroll-progress.test.js` covers a non-scrollable page, negative
+  overscroll, normal progress, and bottom overscroll; `package.json` includes
+  the new test in syntax validation; `README.md` documents the coverage; this
+  log records the maintenance decision.
+- **Validation:** `npm run validate`, `git diff --check`, and a complete diff
+  review covering normal scrolling, mobile overscroll, accessibility, runtime
+  cost, browser compatibility, privacy, and static-hosting behavior.
+- **Risk:** Low. Normal 0–100% readings and the existing passive scroll listener
+  are unchanged. Only out-of-range values are constrained, with no dependency,
+  markup, personal-content, storage, network, or deployment changes.
+- **Rollback:** Revert this pull request's squash commit to restore the
+  upper-bound-only calculation and remove its regression test. No stored state,
+  generated file, schema, or deployment needs migration.
+
 ## 2026-11-09 — Keep promise acceptance usable without canvas rendering
 
 - **Rationale:** The promise flow assumed that every canvas returns a 2D
