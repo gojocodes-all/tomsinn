@@ -59,7 +59,8 @@ runs both phases in that order.
 The automated tests cover successful persistence, failures while accessing or
 operating on browser storage, restoration of the visible story and ending after
 an accepted promise is revisited, one-time acceptance behavior, and note-card
-pressed and visible-face states.
+pressed and visible-face states. They also verify that mobile overscroll cannot
+push the reading-progress indicator outside its visual 0–100% range.
 They do not replace manual browser checks for layout, animation, downloads, or
 the complete interaction flow.
 
@@ -77,6 +78,7 @@ the complete interaction flow.
 | `test/restored-promise.test.js` | DOM regression test for restoring an accepted promise |
 | `test/promise-acceptance.test.js` | DOM regression test for one-time acceptance and locked answer states |
 | `test/note-accessibility.test.js` | DOM regression test for note-card accessibility state |
+| `test/scroll-progress.test.js` | Reading-progress bounds across normal scrolling and overscroll |
 | `.github/maintenance-log.md` | Dated maintenance decisions, validation, risk, and rollback notes |
 
 ## Privacy and data

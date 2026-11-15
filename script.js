@@ -260,5 +260,5 @@ savePromiseButton.addEventListener("click", () => {
 window.addEventListener("scroll", () => {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-  progressBar.style.width = `${Math.min(100, progress)}%`;
+  progressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
 }, { passive: true });
