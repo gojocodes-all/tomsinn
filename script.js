@@ -13,19 +13,6 @@ const confettiCanvas = document.querySelector("#confettiCanvas");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------- Open the envelope ----------
-function revealStory({ scrollToStart = false } = {}) {
-  openLetterButton.classList.add("opening");
-  openLetterButton.setAttribute("aria-label", "Letter opened");
-  story.hidden = false;
-  watchSections();
-
-  if (scrollToStart) {
-    story.querySelector(".section").scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth"
-    });
-  }
-}
-
 openLetterButton.addEventListener("click", () => {
   if (openLetterButton.classList.contains("opening")) return;
 
@@ -33,7 +20,11 @@ openLetterButton.addEventListener("click", () => {
   openLetterButton.setAttribute("aria-label", "Letter opened");
 
   window.setTimeout(() => {
-    revealStory({ scrollToStart: true });
+    story.hidden = false;
+    watchSections();
+    story.querySelector(".section").scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth"
+    });
   }, reduceMotion ? 10 : 900);
 });
 
@@ -59,20 +50,10 @@ function watchSections() {
 }
 
 // ---------- Flip the little notes ----------
-function setNoteOpen(note, isOpen) {
-  const front = note.querySelector(".note-front");
-  const back = note.querySelector(".note-back");
-
-  note.classList.toggle("open", isOpen);
-  note.setAttribute("aria-pressed", String(isOpen));
-  front.setAttribute("aria-hidden", String(isOpen));
-  back.setAttribute("aria-hidden", String(!isOpen));
-}
-
 document.querySelectorAll(".note").forEach((note) => {
-  setNoteOpen(note, false);
   note.addEventListener("click", () => {
-    setNoteOpen(note, !note.classList.contains("open"));
+    note.classList.toggle("open");
+    note.setAttribute("aria-pressed", String(note.classList.contains("open")));
   });
 });
 
@@ -114,52 +95,25 @@ noButton.addEventListener("focus", () => {
 noButton.addEventListener("click", moveNoButton);
 
 // ---------- Accept the promise ----------
-function revealAcceptedPromise({
-  persist = false,
-  celebrate = false,
-  scrollToEnd = false
-} = {}) {
-  const wasAlreadyVisible = !finalSection.hidden;
-
-  finalSection.hidden = false;
-  yesButton.disabled = true;
-  noButton.disabled = true;
-  yesButton.textContent = "Promise accepted ✓";
-  buttonComment.textContent = "Promise accepted. The answer is locked in.";
-
-  if (wasAlreadyVisible) return;
-
-  if (persist) promiseStorage.accept();
-  if (celebrate && !reduceMotion) launchConfetti();
-
-  if (scrollToEnd) {
-    window.setTimeout(() => {
-      finalSection.scrollIntoView({
-        behavior: reduceMotion ? "auto" : "smooth"
-      });
-    }, reduceMotion ? 0 : 180);
-  }
-}
-
 yesButton.addEventListener("click", () => {
-  revealAcceptedPromise({
-    persist: true,
-    celebrate: true,
-    scrollToEnd: true
-  });
+  finalSection.hidden = false;
+  localStorage.setItem("tomisinFriendshipPromise", "accepted");
+
+  if (!reduceMotion) launchConfetti();
+
+  window.setTimeout(() => {
+    finalSection.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+  }, 180);
 });
 
 // Keep the ending visible if the page is refreshed after choosing Yes.
-if (promiseStorage.isAccepted()) {
-  revealStory();
-  revealAcceptedPromise();
+if (localStorage.getItem("tomisinFriendshipPromise") === "accepted") {
+  finalSection.hidden = false;
 }
 
 // ---------- Draw a small confetti burst (no library needed) ----------
 function launchConfetti() {
   const context = confettiCanvas.getContext("2d");
-  if (!context) return;
-
   const colours = ["#7b263b", "#d68b95", "#b7894d", "#f3d5bd", "#54182a"];
   const pieces = Array.from({ length: 110 }, () => ({
     x: Math.random() * window.innerWidth,
@@ -209,14 +163,9 @@ function launchConfetti() {
 // ---------- Save the promise as a simple image ----------
 savePromiseButton.addEventListener("click", () => {
   const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
   canvas.width = 1200;
   canvas.height = 675;
-  const context = canvas.getContext("2d");
-
-  if (!context) {
-    savePromiseButton.textContent = "Save unavailable — take a screenshot";
-    return;
-  }
 
   context.fillStyle = "#f7eee4";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -260,5 +209,5 @@ savePromiseButton.addEventListener("click", () => {
 window.addEventListener("scroll", () => {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-  progressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  progressBar.style.width = `${Math.min(100, progress)}%`;
 }, { passive: true });
